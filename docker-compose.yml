@@ -1,0 +1,49 @@
+version: "3"
+
+services:
+  lamp:
+    build:
+      context: ./bin/lamp
+    container_name: 'lamp'
+    restart: 'always'
+    ports:
+      - "127.0.0.1:80:80"
+      - "127.0.0.1:443:443"
+    links:
+      - mysql
+#      - postgres
+    volumes:
+      - ${DOCUMENT_ROOT}:/proyectos
+      - ${DOCUMENT_ROOT}/www:/var/www/html
+      - ${PHP_INI}:/usr/local/etc/php/php.ini
+      - ${VHOSTS_DIR}:/etc/apache2/sites-enabled
+      - ${APACHE_LOG_DIR}:/var/log/apache2
+  mysql:
+    build: ./bin/mysql
+    container_name: 'mysql'
+    command: --default-authentication-plugin=mysql_native_password
+    restart: 'always'
+    ports:
+      - "3600:3600"
+    volumes:
+      - ${DOCUMENT_ROOT}:/proyectos
+      - ${MYSQL_DATA_DIR}:/var/lib/mysql
+      - ${MYSQL_LOG_DIR}:/var/log/mysql
+      - ${MYSQL_CONFIG_DIR}:/etc/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+#  postgres:
+#    build: ./bin/postgres
+#    container_name: 'postgres'
+#    restart: 'always'
+#    ports:
+#      - "5432:5432"
+#    environment:
+#      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+#    volumes:
+#      - ${DOCUMENT_ROOT}:/proyectos
+#      - ${POSTGRES_DATA_DIR}:/var/lib/postgresql/data
+#      - ${POSTGRES_LOG_DIR}:/var/log/postgres
