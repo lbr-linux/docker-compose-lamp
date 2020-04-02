@@ -21,7 +21,6 @@ services:
   mysql:
     build: ./bin/mysql
     container_name: 'mysql'
-    command: --default-authentication-plugin=mysql_native_password
     restart: 'always'
     ports:
       - "3600:3600"

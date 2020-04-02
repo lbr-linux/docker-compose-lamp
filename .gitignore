@@ -1,8 +1,7 @@
 /.env
 /.vscode
-/config/*
-/data/*
-/logs/*
-/www/**
-.DS_Store
+/logs/*/*
 !.gitkeep
+/data/*/*
+!/data/*/.gitkeep
+!/logs/*/.gitkeep
