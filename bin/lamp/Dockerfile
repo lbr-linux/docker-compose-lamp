@@ -4,7 +4,7 @@ RUN apt-get -y update --fix-missing
 RUN apt-get upgrade -y
 
 # Instala librerias importantes
-RUN apt-get -y install --fix-missing apt-utils nano dialog curl build-essential git curl libcurl3 libcurl3-dev zip mc libpq-dev
+RUN apt-get -y install --fix-missing apt-utils nano dialog curl build-essential git curl libxml2-dev libxml2-dev libcurl3 libcurl3-dev zip mc libpq-dev gpg
 
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -52,7 +52,7 @@ RUN groupadd --gid 1000 node \
 
 # Incorporando nodejs
 
-ENV NODE_VERSION 13.12.0
+ENV NODE_VERSION 13.14.0
 
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \

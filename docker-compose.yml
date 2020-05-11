@@ -5,7 +5,7 @@ services:
     build:
       context: ./bin/lamp
     container_name: 'lamp'
-    restart: 'always'
+    restart: 'no'
     ports:
       - "127.0.0.1:80:80"
       - "127.0.0.1:443:443"
@@ -20,8 +20,9 @@ services:
       - ${APACHE_LOG_DIR}:/var/log/apache2
   mysql:
     build: ./bin/mysql
+    command: --default-authentication-plugin=mysql_native_password
     container_name: 'mysql'
-    restart: 'always'
+    restart: 'no'
     ports:
       - "3600:3600"
     volumes:
