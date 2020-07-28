@@ -53,3 +53,16 @@ docker exec -it lamp ln -s /proyectos/blog/public /var/www/html/blog
 ```
 
 Then you can enter to blog application by http://localhost/blog
+
+
+Install phpMyAdmin:
+
+```
+docker exec -it lamp wget https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-all-languages.zip --directory-prefix=/var/www/html
+docker exec -it lamp unzip /var/www/html/phpMyAdmin-5.0.2-all-languages.zip -d /var/www/html
+docker exec -it lamp rm /var/www/html/phpMyAdmin-5.0.2-all-languages.zip
+docker exec -it lamp mv /var/www/html/phpMyAdmin-5.0.2-all-languages /var/www/html/db
+docker exec -it lamp mv /var/www/html/db/config.sample.inc.php /var/www/html/db/config.inc.php
+docker exec -it lamp sed -i 's/localhost/mysql/g' /var/www/html/db/config.inc.php
+docker exec -it lamp chown user:user -R /var/www/html/db
+```

@@ -2,7 +2,7 @@ FROM php:7.4-apache
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get -y --no-install-recommends install libzip-dev zlib1g-dev git zip unzip mc && apt-get clean &&  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+RUN apt-get update && apt-get -y --no-install-recommends install libzip-dev zlib1g-dev git zip unzip mc wget && apt-get clean &&  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -34,8 +34,12 @@ RUN a2enmod rewrite headers
 WORKDIR /proyectos
 
 
-RUN groupadd --gid 1000 node \
-  && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
+RUN groupadd --gid 1010 node \
+  && useradd --uid 1010 --gid node --shell /bin/bash --create-home node
+
+# default user of host, 1001 same id as your user, this allow modify files in both container and Desktop Dev
+RUN groupadd --gid 1001 user \
+  && useradd --uid 1001 --gid user --gid sudo --shell /bin/bash --create-home user
 
 # Install node y yarn
 
