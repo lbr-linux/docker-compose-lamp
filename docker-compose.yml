@@ -7,17 +7,18 @@ services:
     container_name: 'lamp'
     restart: 'no'
     ports:
-      - "127.0.0.1:80:80"
-      - "127.0.0.1:443:443"
+      - "127.0.0.1:80:80" # open only localhost for all host replace 127.0.0.1 for 0.0.0.0
     links:
       - mysql
 #      - postgres
     volumes:
       - ${DOCUMENT_ROOT}:/proyectos
-      - ${DOCUMENT_ROOT}/www:/var/www/html
+      - ${HTML_DIR}:/var/www/html
       - ${PHP_INI}:/usr/local/etc/php/php.ini
       - ${VHOSTS_DIR}:/etc/apache2/sites-enabled
       - ${APACHE_LOG_DIR}:/var/log/apache2
+    env_file:
+      - ./.env    
   mysql:
     build: ./bin/mysql
     command: --default-authentication-plugin=mysql_native_password
