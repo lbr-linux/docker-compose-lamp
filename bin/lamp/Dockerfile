@@ -37,12 +37,12 @@ WORKDIR /proyectos
 RUN groupadd --gid 1010 node \
   && useradd --uid 1010 --gid node --shell /bin/bash --create-home node
 
-# default user of host, 1001 same id as your user, this allow modify files in both container and Desktop Dev
-RUN groupadd --gid 1001 user \
-  && useradd --uid 1001 --gid user --gid sudo --shell /bin/bash --create-home user
+# default user of host, 1000 same id as your user, this allow modify files in both container and Desktop Dev
+RUN groupadd --gid 1000 user \
+  && useradd --uid 1000 --gid user --gid sudo --shell /bin/bash --create-home user
 
-# Install node y yarn
+# Install node y yarn (optional)
 
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get install -y nodejs
-RUN npm install -g yarn
+# RUN npm install -g yarn
