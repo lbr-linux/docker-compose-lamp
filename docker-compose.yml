@@ -17,17 +17,22 @@ services:
       - "127.0.0.1:9001:9001"
     links:
       - mysql
-#      - postgres
+      - postgres
     volumes:
       - ${DOCUMENT_ROOT}:/proyectos
       - ${HTML_DIR}:/var/www/html
       - ${PHP_INI}:/usr/local/etc/php/php.ini
       - ${VHOSTS_DIR}:/etc/apache2/sites-enabled
       - ${APACHE_LOG_DIR}:/etc/apache2/logs/apache2/
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10k"
+        max-file: "10"
     env_file:
-      - ./.env    
+      - ./.env
   mysql:
-    build: ./bin/mysql
+    image: mysql:8
     command: --default-authentication-plugin=mysql_native_password
     container_name: 'mysql'
     restart: 'always'
@@ -38,20 +43,30 @@ services:
       - ${MYSQL_DATA_DIR}:/var/lib/mysql
       - ${MYSQL_LOG_DIR}:/var/log/mysql
       - ${MYSQL_CONFIG_DIR}:/etc/mysql
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10k"
+        max-file: "10"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-#  postgres:
-#    build: ./bin/postgres
-#    container_name: 'postgres'
-#    restart: 'always'
-#    ports:
-#      - "5432:5432"
-#    environment:
-#      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-#    volumes:
-#      - ${DOCUMENT_ROOT}:/proyectos
-#      - ${POSTGRES_DATA_DIR}:/var/lib/postgresql/data
-#      - ${POSTGRES_LOG_DIR}:/var/log/postgres
+  postgres:
+    image: postgres:9.2
+    container_name: 'postgres'
+    restart: 'always'
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ${DOCUMENT_ROOT}:/proyectos
+      - ${POSTGRES_DATA_DIR}:/var/lib/postgresql/data
+      - ${POSTGRES_LOG_DIR}:/var/log/postgres
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10k"
+        max-file: "10"

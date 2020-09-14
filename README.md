@@ -7,13 +7,13 @@ You can see bin/lamp/Dockerfile to install extensions php or other libraries for
 
 You will need to copy sample.env to .env and replace the corresponding values ​​with the ones you want.
 
-First make directory ex. /home/username/Desktop/proyectos 
+First make directory ex. /home/username/Desktop/projects 
 ```
-mkdir /home/username/Desktop/proyectos
+mkdir /home/username/Desktop/projects
 ```
 
 ```
-cd /home/username/Desktop/proyectos
+cd /home/username/Desktop/projects
 ```
 
 Clone this repo.
@@ -42,14 +42,14 @@ http://localhost/
 ```
 
 
-The directory /home/username/Desktop/proyectos is linked with /proyectos in container, this cotains all project in same docker container.
+The directory /home/username/Desktop/projects is linked with /projects in container, this cotains all project in same docker container.
 
 Each public folder must be linked to the directory /var/www/html and to see it in http://localhost/proyectname
 
 example: 
 
 ```
-docker exec -it lamp ln -s /proyectos/blog/public /var/www/html/blog
+docker exec -it lamp ln -s /projects/blog/public /var/www/html/blog
 ```
 
 Then you can enter to blog application by http://localhost/blog
